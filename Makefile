@@ -23,7 +23,8 @@ cat:
 
 minify: cat
 	which uglifyjs >/dev/null && \
-    uglifyjs "${BUILD_FILE}" > "${MINIFIED_BUILD_FILE}"
+    ./minify_properties.js < "${BUILD_FILE}" \
+    | uglifyjs > "${MINIFIED_BUILD_FILE}"
 
 publish:
 	[ "`git symbolic-ref -q HEAD`" = "refs/heads/master" ] || ( \

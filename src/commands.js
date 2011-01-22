@@ -148,7 +148,7 @@ _.redraw = function() {
   var block = this.lastChild.jQ, height = block.outerHeight(true);
   block.css({
     borderTopWidth: height/28+1 // NOTE: Formula will need to change if our font isn't Symbola
-  }).prev().css({
+  }). prev().css({
     fontSize: .9*height/+block.css('fontSize').slice(0,-2)+'em'
   });
 };
@@ -194,7 +194,7 @@ _.latex = function() {
 };
 _.redraw = function() {
   var block = this.firstChild.jQ;
-  block.prev().add(block.next()).css('fontSize', block.outerHeight()/(+block.css('fontSize').slice(0,-2)*1.02)+'em');
+  block. prev().add(block. next()).css('fontSize', block.outerHeight()/(+block.css('fontSize').slice(0,-2)*1.02)+'em');
 };
 
 LatexCmds.lbrace = CharCmds['{'] = proto(Bracket, function(replacedFragment) {
@@ -415,7 +415,7 @@ _.placeCursor = function(cursor) {
           $(e.target = this.nextSibling).trigger(e);
           return false;
         }
-      ).insertBefore(this.jQ));
+      ). insertBefore(this.jQ));
 };
 _.latex = function() {
   return '\\' + this.firstChild.latex() + ' ';
@@ -525,7 +525,7 @@ _.keydown = function(e) {
       newBlock.parent = this;
       newBlock.jQ = $('<span></span>')
         .data(jQueryDataKey, {block: newBlock})
-        .insertAfter(currentBlock.jQ);
+        . insertAfter(currentBlock.jQ);
       if (currentBlock.next)
         currentBlock.next.prev = newBlock;
       else
