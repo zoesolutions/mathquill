@@ -1,26 +1,28 @@
 #!/usr/local/bin/node
 
 var props = {
-  p: 'parent',
-  n: 'next',
-  v: 'prev',
-  f: 'firstChild',
-  l: 'lastChild',
-  i: 'insertBefore',
-  a: 'insertAfter',
-  n: 'insertNew',
-  r: 'remove',
-  P: 'prependTo',
   A: 'appendTo',
-  e: 'eachChild',
+  a: 'insertAfter',
+  b: 'blockify',
   C: 'foldChildren',
-  E: 'each',
-  F: 'fold',
   c: 'cursor',
-  s: 'selection',
-  I: 'intervalId',
+  E: 'each',
+  e: 'eachChild',
+  F: 'fold',
+  f: 'firstChild',
   h: 'html_template',
-  b: 'blockify'
+  I: 'intervalId',
+  i: 'insertBefore',
+  l: 'lastChild',
+  N: 'insertNew',
+  n: 'next',
+  P: 'prependTo',
+  p: 'parent',
+  r: 'remove',
+  s: 'selection',
+  t: 'text_template',
+  v: 'prev',
+  z: 'insertAt'
 };
 
 for (var c in props)
