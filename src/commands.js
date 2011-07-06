@@ -31,6 +31,22 @@ LatexCmds.mathtt = bind(Style, '\\mathtt', '<span class="monospace font"></span>
 LatexCmds.underline = bind(Style, '\\underline', '<span class="underline"></span>');
 LatexCmds.overline = LatexCmds.bar = bind(Style, '\\overline', '<span class="overline"></span>');
 
+function PoorMansBold(replacedFragment) {
+  this.init('\\pmb', undefined, undefined, replacedFragment);
+}
+_ = PoorMansBold.prototype = new MathCommand;
+_.html_template = ['<span class="pmb"></span>', '<span class="pmb-main"></span>'];
+_.placeCursor = function(cursor) {
+  this.cursor = cursor.appendTo(this.firstChild);
+};
+_.redraw = function() {
+  this.cursor.hide();
+  this.firstChild.jQ.prevAll().remove();
+  this.firstChild.jQ.clone(true).removeClass().addClass('pmb-clone').prependTo(this.jQ);
+  this.cursor.show();
+};
+LatexCmds.pmb = PoorMansBold;
+
 function SupSub(cmd, html, text, replacedFragment) {
   this.init(cmd, [ html ], [ text ], replacedFragment);
 }
