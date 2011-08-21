@@ -182,65 +182,9 @@ _.seek = function(target, pageX, pageY) {
 };
 _.writeLatex = function(latex) {
   this.deleteSelection();
-  latex = ( latex && latex.match(/\\text\{([^}]|\\\})*\}|\\[a-z]*|[^\s]/ig) ) || 0;
-  (function writeLatexBlock(cursor) {
-    while (latex.length) {
-      var token = latex.shift(); //pop first item
-      if (!token || token === '}') return;
-
-      var cmd;
-      if (token.slice(0, 6) === '\\text{') {
-        cmd = new TextBlock(token.slice(6, -1));
-        cursor.insertNew(cmd).insertAfter(cmd);
-        continue; //skip recursing through children
-      }
-      else if (token === '\\left' || token === '\\right') { //FIXME HACK: implement real \left and \right LaTeX commands, rather than special casing them here
-        token = latex.shift();
-        if (token === '\\')
-          token = latex.shift();
-
-        cursor.insertCh(token);
-        cmd = cursor.prev || cursor.parent.parent;
-
-        if (cursor.prev) //was a close-paren, so break recursion
-          return;
-        else //was an open-paren, hack to put the following latex
-          latex.unshift('{'); //in the ParenBlock in the math DOM
-      }
-      else if (/^\\[a-z]+$/i.test(token)) {
-        token = token.slice(1);
-        var cmd = LatexCmds[token];
-        if (cmd)
-          cursor.insertNew(cmd = new cmd(token));
-        else {
-          cmd = new TextBlock(token);
-          cursor.insertNew(cmd).insertAfter(cmd);
-          continue; //skip recursing through children
-        }
-      }
-      else {
-        if (token.match(/[a-eg-zA-Z]/)) //exclude f because want florin
-          cmd = new Variable(token);
-        else if (cmd = LatexCmds[token])
-          cmd = new cmd(token);
-        else
-          cmd = new VanillaSymbol(token);
-
-        cursor.insertNew(cmd);
-      }
-      cmd.eachChild(function(child) {
-        cursor.appendTo(child);
-        var token = latex.shift();
-        if (!token) return false;
-
-        if (token === '{')
-          writeLatexBlock(cursor);
-        else
-          cursor.insertCh(token);
-      });
-      cursor.insertAfter(cmd);
-    }
-  }(this));
+  latex = latex && latex.match(/\\[a-z]*|\s+|./ig);
+  if (latex)
+    this.parent.writeLatex(this, latex, 0);
   return this.hide();
 };
 _.write = function(ch) {

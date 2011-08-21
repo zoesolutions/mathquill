@@ -436,6 +436,13 @@ _.focus = function() {
   }
   return this;
 };
+_.writeLatex = function(cursor, latex, i) {
+  for (var token; token = latex[i], token && token !== '}'; i += 1) {
+    for (var j = 0; j < token.length; j += 1)
+      this.parent.write(token.charAt(j));
+  }
+  return i;
+};
 
 CharCmds.$ =
 LatexCmds.text =

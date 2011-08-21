@@ -176,6 +176,20 @@ _.remove = function() {
 
   return self;
 };
+_.writeLatex = function(cursor, latex, i) {
+  this.eachChild(function(child) {
+    var token = latex[++i];
+    if (/^\s+$/.test(token)) return;
+    if (!token) return false;
+
+    cursor.appendTo(child);
+    if (token === '{')
+      i = child.writeLatex(cursor, latex, i + 1);
+    else
+      child.writeLatex(cursor, [ token ], 0);
+  });
+  return i;
+};
 
 /**
  * Lightweight command without blocks or children.
@@ -227,6 +241,52 @@ _.blur = function() {
     this.jQ.addClass('empty');
 
   return this;
+};
+_.writeLatex = function(cursor, latex, i) {
+  for (var token; token = latex[i], token && token !== '}'; i += 1) {
+    if (/^\s+$/.test(token)) continue;
+    var cmd;
+    if (token === '\\left' || token === '\\right') { //FIXME HACK: implement real \left and \right LaTeX commands, rather than special casing them here
+      token = latex[++i];
+      if (/^\s+$/.test(token))
+        token = latex[++i];
+      if (token === '\\')
+        token = latex[++i];
+
+      cursor.insertCh(token);
+
+      if (cursor.prev) //was a close-paren, so break recursion
+        return i + 1;
+      //else was an open-paren
+
+      cmd = cursor.parent.parent;
+      latex[i--] = '{'; //hack to put the following latex in the ParenBlock in the math DOM
+    }
+    else if (/^\\[a-z]+$/i.test(token)) {
+      token = token.slice(1);
+      var cmd = LatexCmds[token];
+      if (cmd)
+        cursor.insertNew(cmd = new cmd(token));
+      else {
+        cmd = new TextBlock(token);
+        cursor.insertNew(cmd).insertAfter(cmd);
+        continue; //skip recursing through children
+      }
+    }
+    else {
+      if (token.match(/[a-eg-zA-Z]/)) //exclude f because want florin
+        cmd = new Variable(token);
+      else if (cmd = LatexCmds[token])
+        cmd = new cmd(token);
+      else
+        cmd = new VanillaSymbol(token);
+
+      cursor.insertNew(cmd);
+    }
+    i = cmd.writeLatex(cursor, latex, i);
+    cursor.insertAfter(cmd);
+  }
+  return i;
 };
 
 /**
