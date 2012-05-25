@@ -23,7 +23,10 @@ function createRoot(jQ, root, textbox, editable) {
   root.renderLatex(contents.text());
 
   //textarea stuff
-  var textareaSpan = root.textarea = $('<span class="textarea"><textarea></textarea></span>'),
+  var textareaSpan = root.textarea = $('<span class="textarea">' +
+		  // DR: IE displays the cursor slightly offset, if span is empty, but displays the cursor at the correct
+		  // position if span is filled with a space
+		  ($.browser.msie ? ' ' : '') + '<textarea></textarea></span>'),
     textarea = textareaSpan.children();
 
   /******
