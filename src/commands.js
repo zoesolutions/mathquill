@@ -192,6 +192,62 @@ _.text_template = ['(', '/', ')'];
 
 LatexCmds.frac = LatexCmds.dfrac = LatexCmds.cfrac = LatexCmds.fraction = Fraction;
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * MATHBB
+ * based on SQRT
+ *
+ * @author Daniel Ruthardt <dr@zoesolutions.eu>
+ * @since 20120418
+ * @copyright 2011, zoe solutions GmbH
+ */
+function MathBB(replacedFragment) {
+  this.init('\\mathbb', undefined, undefined, replacedFragment);
+}
+_ = MathBB.prototype = new MathCommand;
+_.html_template = [
+	'<span class="mathbb-stem"></span>'
+];
+_.text_template = ['mathbb(', ')'];
+_.redraw = function() {
+	if (this.firstChild && this.firstChild.firstChild &&
+			this.firstChild.firstChild.cmd == this.firstChild.firstChild.jQ.text()) {
+		var utf8 = null;
+		switch (this.firstChild.firstChild.cmd) {
+			case 'C':
+				utf8 = '&#8450;';
+				break;
+			case 'H':
+				utf8 = '&#8461;';
+				break;
+			case 'N':
+				utf8 = '&#8469;';
+				break;
+			case 'P':
+				utf8 = '&#8473;';
+				break;
+			case 'Q':
+				utf8 = '&#8474;';
+				break;
+			case 'R':
+				utf8 = '&#8477;';
+				break;
+			case 'Z':
+				utf8 = '&#8484;';
+				break;
+		}
+	  
+		if (utf8) {
+			this.firstChild.firstChild.jQ.html(utf8);
+		}
+	}
+};
+
+LatexCmds.mathbb = MathBB;
+
+// ---------------------------------------------------------------------------------------------------------------------
+
 function LiveFraction() {
   Fraction.apply(this, arguments);
 }

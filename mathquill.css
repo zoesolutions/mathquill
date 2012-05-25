@@ -28,6 +28,7 @@
 .mathquill-rendered-math .fraction,
 .mathquill-rendered-math .sqrt-prefix,
 .mathquill-rendered-math .sqrt-stem,
+.mathquill-rendered-math .mathbb-stem,
 .mathquill-rendered-math .paren,
 .mathquill-rendered-math .array,
 .mathquill-rendered-math .block {
