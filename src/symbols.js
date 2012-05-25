@@ -270,6 +270,8 @@ LatexCmds['∑'] = LatexCmds.sum = LatexCmds.summation = bind(BigSymbol,'\\sum '
 LatexCmds['∏'] = LatexCmds.prod = LatexCmds.product = bind(BigSymbol,'\\prod ','&prod;');
 LatexCmds.coprod = LatexCmds.coproduct = bind(BigSymbol,'\\coprod ','&#8720;');
 LatexCmds['∫'] = LatexCmds['int'] = LatexCmds.integral = bind(BigSymbol,'\\int ','&int;');
+LatexCmds['∬'] = LatexCmds['iint'] = LatexCmds.integral = bind(BigSymbol,'\\iint ','∬');
+LatexCmds['∭'] = LatexCmds['iiint'] = LatexCmds.integral = bind(BigSymbol,'\\iiint ','∭');
 
 
 
