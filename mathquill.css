@@ -26,6 +26,8 @@
 .mathquill-rendered-math sup,
 .mathquill-rendered-math sub,
 .mathquill-rendered-math .fraction,
+.mathquill-rendered-math .overset,
+.mathquill-rendered-math .underset,
 .mathquill-rendered-math .sqrt-prefix,
 .mathquill-rendered-math .sqrt-stem,
 .mathquill-rendered-math .mathbb-stem,
@@ -392,3 +394,71 @@
 /*.mathquill-rendered-math .not {
   margin-right: -.75em;
 }*/
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+/**
+ * OVERSET
+ * based on FRACTION
+ *
+ * @author Daniel Ruthardt <dr@zoesolutions.eu>
+ * @since 20111209
+ */
+.mathquill-rendered-math .overset {
+  text-align: center;
+  padding: 0 .1em;
+}
+.mathquill-rendered-math .overset, x:-moz-any-link { /* Firefox 2 (and older?) only */
+  display: -moz-groupbox; /* because display:inline-block is FUBAR in Gecko < 1.9.0 */
+}
+.mathquill-rendered-math .overset, x:-moz-any-link, x:default { /* Firefox 3+ (Gecko 1.9.0+) */
+  display: inline-block;
+}
+.mathquill-rendered-math .overset-set, .mathquill-rendered-math .overset-base {
+  display: block;
+}
+.mathquill-rendered-math .overset-set {
+  font-size: 70%;
+  padding-left: .1em;
+  padding-right: .1em;
+}
+.mathquill-rendered-math .overset-base {
+  float: right; /* take out of normal flow to manipulate baseline */
+  width: 100%;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+/**
+ * UNDERSET
+ * based on OVERSET
+ *
+ * @author Daniel Ruthardt <dr@zoesolutions.eu>
+ * @since 20111209
+ */
+.mathquill-rendered-math .underset {
+  text-align: center;
+  padding: 0 .1em;
+  margin-top: -.75em;
+  padding-bottom: .75em;
+}
+.mathquill-rendered-math .underset, x:-moz-any-link { /* Firefox 2 (and older?) only */
+  display: -moz-groupbox; /* because display:inline-block is FUBAR in Gecko < 1.9.0 */
+}
+.mathquill-rendered-math .underset, x:-moz-any-link, x:default { /* Firefox 3+ (Gecko 1.9.0+) */
+  display: inline-block;
+}
+.mathquill-rendered-math .underset-set, .mathquill-rendered-math .underset-base {
+  display: block;
+}
+.mathquill-rendered-math .underset-set {
+  font-size: 70%;
+  padding-left: .1em;
+  padding-right: .1em;
+  position: relative;
+  top: 2.4em;
+}
+.mathquill-rendered-math .underset-base {
+  float: right; /* take out of normal flow to manipulate baseline */
+  width: 100%;
+}

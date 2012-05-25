@@ -248,6 +248,54 @@ LatexCmds.mathbb = MathBB;
 
 // ---------------------------------------------------------------------------------------------------------------------
 
+/**
+ * OVERSET
+ * based on FRACTION
+ *
+ * @author Daniel Ruthardt <dr@zoesolutions.eu>
+ * @since 20111209
+ * @copyright 2011, zoe solutions GmbH
+ */
+function OverSet(replacedFragment) {
+	this.init('\\overset', undefined, undefined, replacedFragment);
+	this.jQ.append('<span style="display:inline-block;width:0">&nbsp;</span>');
+}
+_ = OverSet.prototype = new MathCommand;
+_.html_template = [
+	'<span class="overset"></span>',
+	'<span class="overset-set"></span>',
+	'<span class="overset-base"></span>'
+];
+_.text_template = ['(', '/', ')'];
+
+LatexCmds.overset = OverSet;
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * UNDERSET
+ * based on OVERSET
+ *
+ * @author Daniel Ruthardt <dr@zoesolutions.eu>
+ * @since 20111209
+ * @copyright 2011, zoe solutions GmbH
+ */
+function UnderSet(replacedFragment) {
+	this.init('\\underset', undefined, undefined, replacedFragment);
+	this.jQ.append('<span style="display:inline-block;width:0">&nbsp;</span>');
+}
+_ = UnderSet.prototype = new MathCommand;
+_.html_template = [
+	'<span class="underset"></span>',
+	'<span class="underset-set"></span>',
+	'<span class="underset-base"></span>'
+];
+_.text_template = ['(', '/', ')'];
+
+LatexCmds.underset = UnderSet;
+
+// ---------------------------------------------------------------------------------------------------------------------
+
 function LiveFraction() {
   Fraction.apply(this, arguments);
 }
