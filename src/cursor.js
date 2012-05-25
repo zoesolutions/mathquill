@@ -201,14 +201,35 @@ _.offset = function() {
 };
 _.writeLatex = function(latex) {
   this.deleteSelection();
-  latex = ( latex && latex.match(/\\text\{([^}]|\\\})*\}|\\[,;:]|\\[a-z]*|[^\s]/ig) ) || 0;
+  latex = ( latex && latex.match(/(\\begin\{pmatrix\}([^\\]*(\\[^e])|(\\e[^n])|(\\en[^d])|(\\end[^{])|(\\end\{[^p])|(\\end\{p[^m])|(\\end\{pm[^a])|(\\end\{pma[^t])|(\\end\{pmat[^r])|(\\end\{pmatr[^i])|(\\end\{pmatri[^x])|(\\end\{pmatrix[^}]))*[^\\]*\\end\{pmatrix\})|\\text\{([^}]|\\\})*\}|\\[,;:]|\\[a-z]*|[^\s]/ig) ) || 0;
   (function writeLatexBlock(cursor) {
     while (latex.length) {
       var token = latex.shift(); //pop first item
       if (!token || token === '}') return;
 
       var cmd;
-      if (token.slice(0, 6) === '\\text{') {
+      if (token.match(/\\begin\{pmatrix\}([^\\]*(\\[^e])|(\\e[^n])|(\\en[^d])|(\\end[^{])|(\\end\{[^p])|(\\end\{p[^m])|(\\end\{pm[^a])|(\\end\{pma[^t])|(\\end\{pmat[^r])|(\\end\{pmatr[^i])|(\\end\{pmatri[^x])|(\\end\{pmatrix[^}]))*[^\\]*\\end\{pmatrix\}/)) {
+    	  cursor.insertNew(cmd = new Matrix(token, cursor));
+    	  cmd.placeCursor(cursor);
+
+    	  var parts = token.match(/\\begin\{pmatrix\}([^\\]*(\\[^e])|(\\e[^n])|(\\en[^d])|(\\end[^{])|(\\end\{[^p])|(\\end\{p[^m])|(\\end\{pm[^a])|(\\end\{pma[^t])|(\\end\{pmat[^r])|(\\end\{pmatr[^i])|(\\end\{pmatri[^x])|(\\end\{pmatrix[^}]))*[^\\]*\\end\{pmatrix\}/);
+    	  var content = parts[0].split('\\begin{pmatrix}')[1].split('\\end{pmatrix}')[0];
+    	  
+    	  var rows = content.split('\\\\');
+    	  for (var i = 0; i < rows.length; i++) {
+    		  var columns = rows[i].split('&');
+    		  for (var j = 0; j < columns.length; j++) {
+    	    	  cursor.insertNew(new VanillaSymbol(columns[j]));
+    	    	  
+    	    	  if (j + 1 < columns.length || i + 1 < rows.length) {
+    	    		  cmd.keydown({
+    	    			  which: 9,
+    	    			  shiftKey: j + 1 == columns.length ? true : false
+    	    		  });
+    	    	  }
+    		  }
+    	  }    	  
+      } else if (token.slice(0, 6) === '\\text{') {
         cmd = new TextBlock(token.slice(6, -1));
         cursor.insertNew(cmd).insertAfter(cmd);
         continue; //skip recursing through children
