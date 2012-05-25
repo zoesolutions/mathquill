@@ -66,7 +66,10 @@ _.initBlocks = function(replacedFragment) {
   //otherwise, the succeeding elements of html_template should be child blocks
   var newBlock, prev, num_blocks = self.html_template.length;
   this.firstChild = newBlock = prev =
-    (replacedFragment && replacedFragment.blockify()) || new MathBlock;
+	    (replacedFragment &&
+	    		// DR: encountered a situation where blockify would be called although not being defined
+	    		replacedFragment.blockify &&
+	    		replacedFragment.blockify()) || new MathBlock;
 
   newBlock.parent = self;
   newBlock.jQ = $(self.html_template[1])
