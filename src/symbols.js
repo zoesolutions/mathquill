@@ -486,7 +486,7 @@ LatexCmds.cup = LatexCmds.union = bind(BinaryOperator,'\\cup ','&cup;');
 LatexCmds.cap = LatexCmds.intersect = LatexCmds.intersection =
   bind(BinaryOperator,'\\cap ','&cap;');
 
-LatexCmds['°'] = LatexCmds.deg = LatexCmds.degree = bind(VanillaSymbol,'^\\circ ','&deg;');
+LatexCmds['°'] = LatexCmds.deg = LatexCmds.degree = bind(VanillaSymbol,'^{\\circ} ','&deg;');
 
 LatexCmds.ang = LatexCmds.angle = bind(VanillaSymbol,'\\angle ','&ang;');
 
