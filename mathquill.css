@@ -27,6 +27,7 @@
 .mathquill-rendered-math sub,
 .mathquill-rendered-math .fraction,
 .mathquill-rendered-math .overset,
+.mathquill-rendered-math .vec,
 .mathquill-rendered-math .underset,
 .mathquill-rendered-math .sqrt-prefix,
 .mathquill-rendered-math .sqrt-stem,
@@ -457,6 +458,39 @@
   padding-right: .1em;
 }
 .mathquill-rendered-math .overset-base {
+  float: right; /* take out of normal flow to manipulate baseline */
+  width: 100%;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+/**
+ * VEC
+ * based on OVERSET
+ *
+ * @author Daniel Ruthardt <dr@zoesolutions.eu>
+ * @since 20120826
+ */
+.mathquill-rendered-math .vec {
+  text-align: center;
+  padding: 0 .1em;
+}
+.mathquill-rendered-math .vec, x:-moz-any-link { /* Firefox 2 (and older?) only */
+  display: -moz-groupbox; /* because display:inline-block is FUBAR in Gecko < 1.9.0 */
+}
+.mathquill-rendered-math .vec, x:-moz-any-link, x:default { /* Firefox 3+ (Gecko 1.9.0+) */
+  display: inline-block;
+}
+.mathquill-rendered-math .vec-set, .mathquill-rendered-math .vec-base {
+  display: block;
+}
+.mathquill-rendered-math .vec-set {
+  font-size: 50%;
+  padding-left: .1em;
+  padding-right: .1em;
+  height: 6px;
+}
+.mathquill-rendered-math .vec-base {
   float: right; /* take out of normal flow to manipulate baseline */
   width: 100%;
 }

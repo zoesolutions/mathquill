@@ -270,6 +270,28 @@ _.text_template = ['(', '/', ')'];
 
 LatexCmds.overset = OverSet;
 
+//---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * VEC
+ * based on OVERSET
+ *
+ * @author Daniel Ruthardt <dr@zoesolutions.eu>
+ * @since 20120826
+ * @copyright 2012, zoe solutions GmbH
+ */
+function Vec(replacedFragment) {
+	this.init('\\vec', undefined, undefined, replacedFragment);
+	this.jQ.append('<span style="display:inline-block;width:0">&nbsp;</span>');
+}
+_ = Vec.prototype = new MathCommand;
+_.html_template = [
+	'<span class="vec"><span class="vec-set">&rarr;</span></span>',
+	'<span class="vec-base"></span>'
+];
+
+LatexCmds.vec = Vec;
+
 // ---------------------------------------------------------------------------------------------------------------------
 
 /**
