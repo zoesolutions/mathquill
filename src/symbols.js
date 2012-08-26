@@ -277,16 +277,16 @@ LatexCmds['∭'] = LatexCmds['iiint'] = LatexCmds.integral = bind(BigSymbol,'\\i
 //spacing
 LatexCmds.quad = LatexCmds.emsp = bind(VanillaSymbol,'\\quad ','    ');
 LatexCmds.qquad = bind(VanillaSymbol,'\\qquad ','        ');
-/* spacing special characters, gonna have to implement this in LatexCommandInput::textInput somehow
-case ',':
-  return new VanillaSymbol('\\, ',' ');
-case ':':
-  return new VanillaSymbol('\\: ','  ');
-case ';':
-  return new VanillaSymbol('\\; ','   ');
-case '!':
-  return new Symbol('\\! ','<span style="margin-right:-.2em"></span>');
-*/
+
+/**
+ * Spacing
+ *
+ * @author Daniel Ruthardt <dr@zoesolutions.eu>
+ * @since 20120826
+ */
+LatexCmds[','] = bind(VanillaSymbol, '\\,', ' ');
+LatexCmds[':'] = bind(VanillaSymbol, '\\:', ' ');
+LatexCmds[';'] = bind(VanillaSymbol, '\\;', ' ');
 
 //binary operators
 LatexCmds.diamond = bind(VanillaSymbol, '\\diamond ', '&#9671;');
